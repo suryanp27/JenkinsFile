@@ -1,21 +1,19 @@
 pipeline {
     agent any
-
+    environment {
+        PATH = "/opt/maven/bin:$PATH"
+    }
     stages {
-        stage('Build') {
+        stage('clone the code form github') {
             steps {
-                echo 'Build the code'
+                git 'https://github.com/suryanp27/hello-world.git'
             }
         }
-        stage('Test') {
+        stage('build the code') {
             steps {
-                echo 'Test the code'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploye the code'
+                sh "mvn clean install package" 
             }
         }
     }
 }
+
